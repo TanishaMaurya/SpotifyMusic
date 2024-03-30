@@ -1,1 +1,1 @@
-export const backendUrl ="http://localhost:8080";
+export const backendUrl ="https://spotifymusic-o5ck.onrender.com";
