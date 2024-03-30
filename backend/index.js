@@ -2,7 +2,6 @@ const express=require("express");
 const mongoose =require("mongoose");
 require("dotenv").config();
 const app=express();
-const PORT=8080;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const passport=require("passport");
@@ -22,7 +21,7 @@ const cors=require("cors");
 app.use(cors());//. CORS is a security feature implemented by web browsers to restrict webpages from making requests to a different domain than the one that served the original webpage.
 app.use(express.json()); //to convert into json whatever thing come in body
 
-mongoose.connect("mongodb+srv://tan12maurya:"+process.env.MONGO_PASSWORD +"@cluster0.htcrbdo.mongodb.net/?retryWrites=true&w=majority",{
+mongoose.connect(process.env.MONGO_URL,{
  useNewUrlParser:true,
  useUnifiedTopology:true,
 })
@@ -38,7 +37,7 @@ mongoose.connect("mongodb+srv://tan12maurya:"+process.env.MONGO_PASSWORD +"@clus
 //opts is an options object used for configuring the behavior of the JSON Web Token (JWT) authentication 
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: 'thisKeyIsSupposedToBeSecret',
+  secretOrKey: process.env.JWTKey,
 };
 
 passport.use(
@@ -62,7 +61,10 @@ app.use("/auth",authRoutes);
 app.use("/song",songRoutes);
 app.use("/playlist",playlistRoutes);
 
-app.listen(PORT,()=>{
+app.listen(process.env.PORT,()=>{
  console.log("App is running at ",+ PORT);
 })
 
+app.get("/",(req,res)=>{
+  res.send("Hello world");
+});
