@@ -62,7 +62,7 @@ app.use("/song",songRoutes);
 app.use("/playlist",playlistRoutes);
 
 app.listen(process.env.PORT,()=>{
- console.log("App is running at ",+ PORT);
+ console.log("App is running at ");
 })
 
 app.get("/",(req,res)=>{
